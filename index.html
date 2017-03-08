@@ -1,0 +1,70 @@
+<html>
+
+<head>
+	<title>GeoMe</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="normalize.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="app.js"></script>
+	<style>
+
+		.showlocation {
+			background-color: #E8EFF1;
+			padding:2rem;
+			border:2px solid #C8D9DE;
+			border-radius:5px;
+		}
+
+		#error {
+			color:#f56868;
+		}
+
+	</style>
+
+</head>
+
+<body>
+
+	<div class="container m-top--3">
+
+		<div class="row">
+
+			<div class="col-lg-12 col-sm-12">
+				<div class="showlocation">
+					<h3 class="h4">Your location coordinates are:</h3>
+					<h2 class="h3">Lat: <span id="lat"></span><h2>
+					<h2 class="h3">Lng: <span id="long"></span></h2>
+				</div>
+
+				<p id="error" class="m-top--2"></p>
+			
+				<form id="form" style="display:none" class="clearfix row" action="">
+
+					<h3 class="h3 col-lg-12 m-top--4">Let's geocode for those digits!</h3>
+						
+					<div class="input-group col-lg-6 col-sm-6">
+						<label class="label">Address</label>
+						<input id="address" class="input" type="text" placeholder="Ex. 3990 Vitruvian Way" required>
+					</div>
+
+					<div class="input-group col-lg-6 col-sm-6">
+						<label class="label">Zip Code</label>
+						<input id="zip" class="input" type="text" placeholder="Ex. 75001" required>
+					</div>
+
+					<div class="input-group col-lg-6 col-sm-6">	
+						<input type="submit" class="btn" value="Convert">
+					</div>
+
+				</form>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+
+</html>
