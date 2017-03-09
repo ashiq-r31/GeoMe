@@ -13,6 +13,10 @@ function geoSuccess(position) {
 	document.getElementById('long').innerHTML = position.coords.longitude.toFixed(10);
 }
 
+function geoFail(error) {
+   document.getElementById('geolocate-error').innerHTML = error;
+}
+
 function geocode(address, zip) {
 
   var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + 
@@ -24,17 +28,13 @@ function geocode(address, zip) {
     req.open('GET', url);
 
     req.onload = function() {
-
       if (req.status == 200) {
       	var response = JSON.parse(req.response);
       	console.log(response);
         resolve(response.results[0].geometry.location);
-      }
-
-      else {
+      } else {
         reject(Error(req.statusText));
       }
-
     };
 
     req.onerror = function() {
@@ -52,29 +52,58 @@ function geocodeSuccess(location) {
    document.getElementById('long').innerHTML = location.lng.toFixed(10);
 }
 
+function createForm() {
 
-function geocodeFail(error) {
-   document.getElementById('error').innerHTML = "Error: " + error;
+  var form = document.getElementById('form');
+  var addressGroup = document.getElementById('address-group');
+  var address = document.getElementById('address');
+  var zipGroup = document.getElementById('zip-group');
+  var zip = document.getElementById('zip');
+  var addressError = document.getElementById('address-error');
+  var zipError = document.getElementById('zip-error');
+
+  form.style.display = "block";
+
+  form.onsubmit = function(event){
+
+      event.preventDefault();
+
+      if (address.validity.valueMissing === true) {
+        addressError.innerHTML = 'Address is missing';
+      } else {
+        addressError.innerHTML = '';
+      }
+
+      if (zip.validity.valueMissing === true){
+        zipError.innerHTML = 'Zip Code is missing';
+      } else {
+        zipError.innerHTML = '';
+      }
+
+      if (address.validity.valueMissing === false && zip.validity.valueMissing === false){
+
+        var addressVal = address.value;
+        var zipVal = zip.value;
+
+        addressError.innerHTML = '';
+        zipError.innerHTML = '';
+
+        return geocode(addressVal, zipVal)
+               .then(geocodeSuccess)
+               .catch(geoFail);
+      }
+  };
 }
 
-function showForm() {
-	document.getElementById('form').style.display = "block";
-	document.getElementById('form').onsubmit = function(event){
-		event.preventDefault();
-		var address = document.getElementById('address').value;
-		var zip = document.getElementById('zip').value;
-		document.getElementById('error').innerHTML = "";
-		return geocode(address, zip).then(geocodeSuccess).catch(geocodeFail);
-		;
-	};
+function main(){
+
+  findLocation()
+  .then(geoSuccess)
+  .catch(function(reason){
+    geoFail(reason.message);
+    createForm();
+  });
+
 }
 
-
-
-findLocation()
-.then(geoSuccess)
-.catch(function(reason){
-	document.getElementById('error').innerHTML = "Error: " + reason.message;
-	showForm();
-});
-
+document.getElementById('start').addEventListener('click', main);

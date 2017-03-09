@@ -6,7 +6,6 @@
 	<link rel="stylesheet" type="text/css" href="normalize.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<script src="app.js"></script>
 	<style>
 
 		.showlocation {
@@ -16,7 +15,7 @@
 			border-radius:5px;
 		}
 
-		#error {
+		.error {
 			color:#f56868;
 		}
 
@@ -37,24 +36,34 @@
 					<h2 class="h3">Lng: <span id="long"></span></h2>
 				</div>
 
-				<p id="error" class="m-top--2"></p>
+				<button id="start" class="btn-outline m-top--2">Get coordinates</button>
+
+				<p id="geolocate-error" class="error" class="m-top--2"></p>
 			
-				<form id="form" style="display:none" class="clearfix row" action="">
+				<form id="form" style="display:none" class="" action="">
 
-					<h3 class="h3 col-lg-12 m-top--4">Let's geocode for those digits!</h3>
-						
-					<div class="input-group col-lg-6 col-sm-6">
-						<label class="label">Address</label>
-						<input id="address" class="input" type="text" placeholder="Ex. 3990 Vitruvian Way" required>
+					<div class="row">
+					<h3 class="h3 col-lg-12 m-top--4">Don't worry, we can geocode for those digits!</h3>
 					</div>
 
-					<div class="input-group col-lg-6 col-sm-6">
-						<label class="label">Zip Code</label>
-						<input id="zip" class="input" type="text" placeholder="Ex. 75001" required>
+					<div class="row clearfix">
+						<div id="address-group" class="input-group col-lg-6 col-sm-6">
+							<label class="label">Address</label>
+							<input id="address" class="input" type="text" placeholder="Ex. 3990 Vitruvian Way" required>
+							<p id="address-error" class="error" class="m-top--2"></p>
+						</div>
+
+						<div id="zip-group" class="input-group col-lg-6 col-sm-6">
+							<label class="label">Zip Code</label>
+							<input id="zip" class="input" type="text" placeholder="Ex. 75001" required>
+							<p id="zip-error" class="error" class="m-top--2"></p>
+						</div>
 					</div>
 
-					<div class="input-group col-lg-6 col-sm-6">	
-						<input type="submit" class="btn" value="Convert">
+					<div class="row">
+						<div class="input-group col-lg-6 col-sm-6">	
+							<input type="submit" class="btn" value="Convert">
+						</div>
 					</div>
 
 				</form>
@@ -66,5 +75,7 @@
 	</div>
 
 </body>
+
+<script src="app.js"></script>
 
 </html>
